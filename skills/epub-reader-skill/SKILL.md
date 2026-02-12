@@ -3,32 +3,58 @@ name: epub-reader-skill
 description: Use when you need to parse EPUB files into LLM-friendly text/image blocks, run the epub-reader CLI with uv isolation, validate outputs, or explain the output schema and verification steps.
 ---
 
-# Epub Reader Skill
+# Epub Reader Skill (OpenClaw 本地化版本)
 
-## Overview
+## 描述
 
-Parse EPUB files into LLM-friendly blocks (text, headings, images) and validate the outputs. Default output is Markdown. Prefer running the CLI via `uv run` to keep dependencies isolated.
+将 EPUB 文件解析为 LLM 友好的文本/图像块，并验证输出。默认输出为 Markdown。
 
-## Quick Start
+## 前置条件
 
-1. From the repo root, ensure the uv environment is ready:
-   - `uv sync`
-2. Parse an EPUB into an output folder:
-   - `uv run epub-reader parse /path/to/book.epub --out /path/to/out`
-3. Offline or no-install mode (src layout):
-   - `PYTHONPATH=./src uv run --no-project --isolated --no-sync python -m epub_reader.cli parse /path/to/book.epub --out /path/to/out`
-3. Validate the generated output:
-   - `uv run epub-reader validate /path/to/out`
+1. 已安装 uv 包管理器
+2. EPUB 文件路径
 
-## Workflow
+## 使用方法
 
-1. Parse the EPUB with `epub-reader parse`.
-2. Inspect `content.md`, `manifest.json`, and `images/`.
-3. Run `epub-reader validate` to confirm counts and file integrity.
+### 解析 EPUB 文件
 
-## Progressive Disclosure
+```bash
+# 解析文件（默认输出到 ./output）
+bash /mnt/usb/projects/epub-reader/skills/epub-reader-skill/scripts/parse.sh <epub文件路径>
 
-Load details only when needed:
-- CLI flags, examples, and behavior: `references/cli.md`
-- Output schema and field meanings: `references/output-schema.md`
-- Validation checks and troubleshooting: `references/validation.md`
+# 指定输出目录
+bash /mnt/usb/projects/epub-reader/skills/epub-reader-skill/scripts/parse.sh <epub文件路径> <输出目录>
+```
+
+### 验证输出
+
+```bash
+bash /mnt/usb/projects/epub-reader/skills/epub-reader-skill/scripts/validate.sh <输出目录>
+```
+
+## 工作流程
+
+1. 使用 `parse.sh` 解析 EPUB
+2. 检查生成的 `content.md`、`manifest.json` 和 `images/`
+3. 使用 `validate.sh` 验证文件完整性和数量
+
+## 输出格式
+
+默认输出为 Markdown (`content.md`)，包含：
+- 文本块
+- 标题层级
+- 图像（保存到 `images/` 目录）
+- 元数据 (`manifest.json`)
+
+## OpenClaw 集成
+
+此 skill 已本地化为 OpenClaw 兼容格式：
+- ✅ bash 脚本直接调用
+- ✅ 无需安装（使用 uv run）
+- ✅ 符合 OpenClaw skill 结构规范
+
+## 注意事项
+
+- 使用 `uv run` 保持依赖隔离
+- 离线模式下也可运行
+- 建议先验证输出再使用
