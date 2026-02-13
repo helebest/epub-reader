@@ -2,15 +2,6 @@
 name: holo-epub-reader
 description: 将 EPUB 文件解析为 LLM 友好的文本/图像块，并验证输出。默认输出为 Markdown。
 homepage: https://github.com/helebest/holo-epub-reader
-metadata:
-  {
-    "openclaw":
-      {
-        "emoji": "📚",
-        "requires": { "bins": ["python3"] },
-        "install": [],
-      },
-  }
 ---
 
 # Epub Reader
