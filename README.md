@@ -1,4 +1,4 @@
-# epub-reader
+# holo-epub-reader
 
 Parse EPUB files into LLM-friendly text and image blocks.
 

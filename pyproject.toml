@@ -1,5 +1,5 @@
 [project]
-name = "epub-reader"
+name = "holo-epub-reader"
 version = "0.1.0"
 description = "EPUB reader that extracts text and images into LLM-friendly blocks."
 readme = "README.md"
@@ -9,12 +9,8 @@ license = { text = "MIT" }
 dependencies = []
 
 [project.scripts]
-epub-reader = "epub_reader.cli:main"
+holo-epub-reader = "cli:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["scripts"]
-include = ["epub_reader*"]
