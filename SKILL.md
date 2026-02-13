@@ -20,10 +20,7 @@ uv sync
 ### 解析 EPUB 文件
 
 ```bash
-# 解析文件（默认输出到 ./output）
-bash {baseDir}/scripts/parse.sh <epub文件路径>
-
-# 指定输出目录
+# 解析文件（必须指定输出目录）
 bash {baseDir}/scripts/parse.sh <epub文件路径> <输出目录>
 ```
 

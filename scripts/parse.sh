@@ -3,14 +3,14 @@
 # 用法: bash parse.sh <epub文件路径> [输出目录]
 
 # 检查参数
-if [ -z "$1" ]; then
-    echo "用法: bash parse.sh <epub文件路径> [输出目录]"
+if [ -z "$2" ]; then
+    echo "用法: bash parse.sh <epub文件路径> <输出目录>"
     echo "示例: bash parse.sh /path/to/book.epub /path/to/output"
     exit 1
 fi
 
 EPUB_PATH="$1"
-OUTPUT_DIR="${2:-./output}"
+OUTPUT_DIR="$2"
 
 # 检查文件是否存在
 if [ ! -f "$EPUB_PATH" ]; then
