@@ -1,19 +1,26 @@
-# SKILL.md - Epub Reader
+---
+name: epub-reader
+description: 将 EPUB 文件解析为 LLM 友好的文本/图像块，并验证输出。默认输出为 Markdown。
+homepage: https://github.com/helebest/epub-reader
+metadata:
+  {
+    "openclaw":
+      {
+        "emoji": "📚",
+        "requires": { "bins": ["python3"] },
+        "install": [],
+      },
+  }
+---
 
-## 描述
+# Epub Reader
 
 将 EPUB 文件解析为 LLM 友好的文本/图像块，并验证输出。默认输出为 Markdown。
 
 ## 前置条件
 
-1. 已安装 uv 包管理器
+1. Python 3 已安装（系统自带）
 2. EPUB 文件路径
-
-## 安装
-
-```bash
-uv sync
-```
 
 ## 使用方法
 
