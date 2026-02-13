@@ -32,7 +32,6 @@ mkdir -p "$TARGET_PATH"
 DEPLOY_ITEMS=(
     "SKILL.md"
     "scripts"
-    "epub_reader"
     "pyproject.toml"
 )
 
@@ -47,8 +46,12 @@ for item in "${DEPLOY_ITEMS[@]}"; do
     fi
 done
 
-# Remove cache
-rm -rf "$TARGET_PATH"/*/__pycache__ 2>/dev/null || true
+# Remove cache and unnecessary files
+rm -rf "$TARGET_PATH"/**/__pycache__ 2>/dev/null || true
+rm -rf "$TARGET_PATH"/.venv 2>/dev/null || true
+rm -f "$TARGET_PATH"/*.egg-info 2>/dev/null || true
+rm -f "$TARGET_PATH/uv.lock" 2>/dev/null || true
+rm -rf "$TARGET_PATH/epub_reader" 2>/dev/null || true
 
 echo ""
 echo "✅ Deployment complete!"

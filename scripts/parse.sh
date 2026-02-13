@@ -30,7 +30,7 @@ EPUB_PATH=$(realpath "$EPUB_PATH")
 echo "正在解析: $EPUB_PATH"
 echo "输出目录: $OUTPUT_DIR"
 
-uv run epub-reader parse "$EPUB_PATH" --out "$OUTPUT_DIR"
+uv run python scripts/cli.py parse "$EPUB_PATH" --out "$OUTPUT_DIR"
 
 if [ $? -eq 0 ]; then
     echo "✅ 解析成功!"

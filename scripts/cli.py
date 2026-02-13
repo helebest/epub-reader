@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-from .reader import parse_epub, validate_output
+from reader import parse_epub, validate_output
 
 
 def _build_parser() -> argparse.ArgumentParser:

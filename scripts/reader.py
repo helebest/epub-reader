@@ -7,9 +7,9 @@ from pathlib import Path
 import zipfile
 from typing import Dict, Iterable, List, Tuple
 
-from .epub import OpfPackage, parse_opf, read_container, resolve_href
-from .html_extract import extract_blocks
-from .models import Block, ImageRef
+from epub import OpfPackage, parse_opf, read_container, resolve_href
+from html_extract import extract_blocks
+from models import Block, ImageRef
 
 
 class EpubParseError(RuntimeError):

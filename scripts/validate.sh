@@ -26,7 +26,7 @@ cd "$PROJECT_ROOT"
 
 # 运行验证
 echo "正在验证: $OUTPUT_DIR"
-uv run epub-reader validate "$OUTPUT_DIR"
+uv run python scripts/cli.py validate "$OUTPUT_DIR"
 
 if [ $? -eq 0 ]; then
     echo "✅ 验证成功!"
