@@ -1,7 +1,7 @@
 # holo-epub-reader
 
 [![CI](https://github.com/helebest/holo-epub-reader/actions/workflows/ci.yml/badge.svg)](https://github.com/helebest/holo-epub-reader/actions/workflows/ci.yml)
-[![Release](https://github.com/helebest/holo-epub-reader/actions/workflows/release.yml/badge.svg)](https://github.com/helebest/holo-epub-reader/actions/workflows/release.yml)
+[![Latest Release](https://img.shields.io/github/v/release/helebest/holo-epub-reader?display_name=tag)](https://github.com/helebest/holo-epub-reader/releases)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
