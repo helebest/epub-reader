@@ -8,9 +8,22 @@ authors = [{ name = "Codex" }]
 license = { text = "MIT" }
 dependencies = []
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
 [project.scripts]
-holo-epub-reader = "cli:main"
+holo-epub-reader = "holo_epub_reader.cli:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["holo_epub_reader"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=holo_epub_reader --cov-report=term-missing --cov-fail-under=90"

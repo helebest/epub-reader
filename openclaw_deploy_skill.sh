@@ -1,74 +1,96 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Deploy script for Holo Epub Reader Skill
-# Usage: ./deploy_skill.sh <target-path>
+# Usage: ./openclaw_deploy_skill.sh <target-path>
 #
 
-set -e
+set -euo pipefail
 
-# Get the directory where this script is located (project root)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Global venv path - use $HOME
 GLOBAL_VENV="$HOME/.openclaw/.venv"
+GLOBAL_PYTHON="$GLOBAL_VENV/bin/python3"
 
-# Check arguments
-if [ $# -lt 1 ]; then
+if [ "$#" -lt 1 ]; then
     echo "Usage: $0 <target-path>"
     exit 1
 fi
 
 TARGET_PATH="$1"
 
-# Resolve target path
 if [[ "$TARGET_PATH" != /* ]]; then
     echo "Error: Target path must be absolute"
     exit 1
 fi
 
+if [ ! -x "$GLOBAL_PYTHON" ]; then
+    echo "Error: Required python not found: $GLOBAL_PYTHON"
+    echo "Please initialize OpenClaw global venv first."
+    exit 1
+fi
+
 echo "Deploying Holo Epub Reader to: $TARGET_PATH"
 
-# Read dependencies from pyproject.toml
 echo "Reading dependencies from pyproject.toml..."
-DEPS=$(python3 -c "
-import tomllib
-with open('$SCRIPT_DIR/pyproject.toml', 'rb') as f:
-    data = tomllib.load(f)
+DEPS=$("$GLOBAL_PYTHON" -c "
+import ast
+import re
+from pathlib import Path
+
+text = Path('$SCRIPT_DIR/pyproject.toml').read_text(encoding='utf-8')
+data = None
+
+try:
+    import tomllib  # Python 3.11+
+except ModuleNotFoundError:
+    try:
+        import tomli as tomllib  # type: ignore
+    except ModuleNotFoundError:
+        tomllib = None
+
+if tomllib is not None:
+    data = tomllib.loads(text)
+
+deps = []
+if isinstance(data, dict):
     deps = data.get('project', {}).get('dependencies', [])
-    print(' '.join(deps))
+
+if not deps:
+    match = re.search(r'(?ms)^\\[project\\].*?^dependencies\\s*=\\s*(\\[[^\\]]*\\])', text)
+    if match:
+        deps = ast.literal_eval(match.group(1))
+
+print(' '.join(deps))
 ")
 
 if [ -z "$DEPS" ]; then
     echo "No dependencies found, skipping installation"
 else
     echo "Dependencies: $DEPS"
-    # Install to global venv
     echo "Installing dependencies to global venv..."
-    uv pip install --python "$GLOBAL_VENV/bin/python" $DEPS
+    uv pip install --python "$GLOBAL_PYTHON" $DEPS
 fi
 
-# Create target directory
 mkdir -p "$TARGET_PATH"
 
-# Files and directories to copy
 DEPLOY_ITEMS=(
     "SKILL.md"
     "scripts"
+    "holo_epub_reader"
 )
 
-# Copy each item
 for item in "${DEPLOY_ITEMS[@]}"; do
     if [ -e "$SCRIPT_DIR/$item" ]; then
         echo "Copying $item..."
-        rm -rf "$TARGET_PATH/$item" 2>/dev/null || true
+        rm -rf "$TARGET_PATH/$item"
         cp -r "$SCRIPT_DIR/$item" "$TARGET_PATH/"
     else
         echo "Warning: $item not found, skipping"
     fi
 done
 
-# Remove cache
-rm -rf "$TARGET_PATH"/**/__pycache__ 2>/dev/null || true
+if command -v find >/dev/null 2>&1; then
+    find "$TARGET_PATH" -type d -name __pycache__ -prune -exec rm -rf {} +
+fi
 
 echo ""
 echo "✅ Deployment complete!"

@@ -19,3 +19,7 @@ epub_books/
 
 # OS
 .DS_Store
+
+# Test artifacts
+.pytest_cache/
+.coverage
