@@ -1,5 +1,10 @@
 # holo-epub-reader
 
+[![CI](https://github.com/helebest/holo-epub-reader/actions/workflows/ci.yml/badge.svg)](https://github.com/helebest/holo-epub-reader/actions/workflows/ci.yml)
+[![Release](https://github.com/helebest/holo-epub-reader/actions/workflows/release.yml/badge.svg)](https://github.com/helebest/holo-epub-reader/actions/workflows/release.yml)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 Parse EPUB files into LLM-friendly text and image blocks.
 
 ## 开发
@@ -11,6 +16,12 @@ uv sync --extra dev
 # 运行测试（覆盖率门禁 90%+）
 uv run pytest --cov=holo_epub_reader --cov-report=term-missing --cov-fail-under=90
 ```
+
+## CI / CD
+
+- `CI` workflow: 在 `push main` 和 `pull_request -> main` 触发，矩阵测试 Python `3.10 / 3.11 / 3.12`，并执行 90% 覆盖率门禁。
+- `Release` workflow: 在推送 `v*` tag 时触发，执行测试、构建 `sdist/wheel`、创建 GitHub Release。
+- 可选发布到 PyPI: 配置仓库 secret `PYPI_API_TOKEN` 后，Release workflow 会自动执行 `uv publish`。
 
 ## 部署
 
